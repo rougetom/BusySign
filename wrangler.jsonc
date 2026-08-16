@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "busy-sign",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-16",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "SIGN", "class_name": "BusySign" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["BusySign"] }
+  ],
+  "vars": {
+    "TIMEZONE": "Europe/London",
+    "WORK_START_HOUR": "8",
+    "WORK_END_HOUR": "18",
+    "WORK_DAYS": "1,2,3,4,5"
+  }
+}
