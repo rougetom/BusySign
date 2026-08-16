@@ -1,6 +1,8 @@
 # BusySign Mac reporter
-#
-# Copy to ~/Library/LaunchAgents/com.busysign.reporter.plist after compiling,
-# or just run ./install.sh which writes a concrete plist with your paths.
-#
-# The reporter reads ~/.busysign.env for BUSYSIGN_URL and BUSYSIGN_TOKEN.
+
+Menu bar agent: a red (busy) or green (free) dot.
+
+- Click the dot to toggle Busy / Free (manual override)
+- Right-click for Follow microphone, Busy, Free, or Quit
+
+Run `./install.sh` to compile with AppKit + CoreAudio, write `~/.busysign.env`, and load the Login LaunchAgent.

@@ -8,7 +8,7 @@ Outside working hours (**Monday–Friday, 8:00–18:00** in your Mac’s timezon
 
 ```
 Mac mic (Zoom, Meet, Krisp, Voice Memos, …)
-        → MicReporter (LaunchAgent)
+        → Menu bar reporter (red/green dot, click to override)
         → POST /status (secret)
         → Cloudflare Worker + Durable Object
         → Android phone at GET /
@@ -67,14 +67,17 @@ chmod +x mac/install.sh
 ./mac/install.sh
 ```
 
-It compiles `mac/MicReporter.swift`, writes `~/.busysign.env`, and loads a Login LaunchAgent.
+It compiles `mac/MicReporter.swift`, writes `~/.busysign.env`, and loads a Login LaunchAgent. A **red or green dot** appears in the Mac menu bar (the status that is sent to the phone).
+
+- **Click** the dot to toggle Busy ↔ Free (manual override; microphone is ignored until you switch back)
+- **Right-click** (or Control-click) for **Follow microphone**, Busy, Free, or Quit
 
 ```
 BUSYSIGN_URL=https://busy-sign.<account>.workers.dev/status
 BUSYSIGN_TOKEN=<the STATUS_SECRET value>
 ```
 
-This process does not capture audio, so it should not need Microphone permission.
+This process does not capture audio, so it should not need Microphone permission. Re-run `./mac/install.sh` after pulling to rebuild the menu bar app.
 
 Stop it:
 

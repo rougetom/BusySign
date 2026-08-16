@@ -16,8 +16,8 @@ fi
 
 mkdir -p "${BIN_DIR}" "${LAUNCH_DIR}"
 
-echo "Compiling microphone reporter..."
-swiftc -O -o "${BIN}" "${ROOT}/MicReporter.swift" -framework CoreAudio -framework Foundation
+echo "Compiling menu bar reporter..."
+swiftc -O -o "${BIN}" "${ROOT}/MicReporter.swift" -framework AppKit -framework CoreAudio -framework Foundation
 
 if [[ ! -f "${ENV_FILE}" ]]; then
   read -r -p "Worker status URL (https://busy-sign.<account>.workers.dev/status): " WORKER_URL
@@ -46,7 +46,12 @@ cat > "${PLIST}" <<EOF
   <key>RunAtLoad</key>
   <true/>
   <key>KeepAlive</key>
-  <true/>
+  <dict>
+    <key>SuccessfulExit</key>
+    <false/>
+  </dict>
+  <key>LimitLoadToSessionType</key>
+  <string>Aqua</string>
   <key>WorkingDirectory</key>
   <string>${HOME}</string>
 </dict>
@@ -59,7 +64,8 @@ launchctl enable "gui/$(id -u)/${LABEL}" >/dev/null 2>&1 || true
 launchctl kickstart -k "gui/$(id -u)/${LABEL}"
 
 echo
-echo "Reporter installed and started."
+echo "Reporter installed and started — look for a green/red dot in the menu bar."
+echo "  Click to toggle Busy/Free. Right-click for Follow microphone."
 echo "  Binary:  ${BIN}"
 echo "  Config:  ${ENV_FILE}"
 echo "  Agent:   ${PLIST}"
